@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:notify/core/constants/app_enums.dart';
 import 'package:notify/core/widgets/splash_screen.dart';
 import 'package:notify/features/Authentication/presentation/screens/login_screen.dart';
+import 'package:notify/features/authentication/presentation/screens/account_edit_screen.dart';
+import 'package:notify/features/authentication/presentation/screens/registration_screen.dart';
 import 'package:notify/features/note/presentation/screens/notes_screen.dart';
 import 'package:notify/features/onboarding/onboarding_provider.dart';
 import 'package:notify/features/onboarding/presentation/screens/onboarding_main.dart';
@@ -74,6 +76,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/registration',
+        builder: (context, state) => const RegistrationScreen(),
+      ),
+      GoRoute(
+        path: '/account',
+        builder: (context, state) => const AccountEditScreen(),
       ),
     ],
   );

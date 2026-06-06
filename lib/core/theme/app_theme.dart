@@ -37,7 +37,7 @@ class AppTheme {
           fontSize: 24.sp,
           fontFamily: 'Montserrat',
           fontWeight: FontWeight.bold,
-          color: isDark ? Colors.white : Colors.black,
+          color: isDark ? Colors.white : const Color(0xFF27112A),
         ),
         iconTheme: IconThemeData(
           color: isDark ? Colors.white : const Color(0xFF171A1F),

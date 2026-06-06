@@ -1,29 +1,26 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:notify/core/widgets/skeleton.dart';
-import 'package:notify/features/authentication/presentation/widgets/custom_iconed_elevated_button.dart';
 import 'package:notify/features/theme/theme_provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   // Create a global key that uniquely identifies the Form widget
   final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     return Skeleton(
       childWidget: SingleChildScrollView(
         child: Form(
@@ -32,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: EdgeInsets.all(8.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: .center,
+              mainAxisAlignment: .spaceEvenly,
               children: [
                 Consumer(
                   builder: (context, ref, child) {
@@ -48,45 +45,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                 ),
-                Image.asset(
-                  'assets/images/${isDark ? 'icon-dark.png' : 'icon-light.png'}',
-                  width: 100.w,
-                  height: 95.h,
-                ),
-                Text(
-                  "Notify",
-                  textAlign: .center,
-                  style: textTheme.headlineMedium,
-                ),
-                SizedBox(height: 10.h),
-                Text(
-                  "Sign in to access your intelligent notes",
-                  textAlign: .center,
-                  style: textTheme.labelLarge,
-                ),
-                SizedBox(height: 20.h),
-
-                IconElevatedButton(
-                  icon: FontAwesomeIcons.google,
-                  buttonText: "Continue with Google",
-                  onPressed: () {
-                    debugPrint("Clicked me");
-                  },
-                ),
-                SizedBox(height: 10.h),
-                IconElevatedButton(
-                  icon: FontAwesomeIcons.facebook,
-                  buttonText: "Continue with Facebook",
-                  onPressed: () {
-                    debugPrint("Clicked me");
-                  },
-                ),
-                SizedBox(height: 15.h),
-                Text("OR", textAlign: .center, style: textTheme.labelLarge),
-                SizedBox(height: 15.h),
+                SizedBox(height: 38.h),
                 TextFormField(
                   keyboardType: .text,
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                    hintText: 'name',
+                    prefixIcon: Icon(Icons.account_box_outlined),
+                  ),
 
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 40.h),
+
+                TextFormField(
+                  keyboardType: .text,
                   decoration: const InputDecoration(
                     labelText: 'Email Address',
                     hintText: 'name@example.com',
@@ -100,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 15.h),
+                SizedBox(height: 40.h),
                 TextFormField(
                   obscureText: _obscureText,
                   decoration: InputDecoration(
@@ -118,6 +96,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
                 ),
                 Align(
                   alignment: .bottomLeft,
@@ -126,42 +110,44 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text("Forgot Password?"),
                   ),
                 ),
+
                 SizedBox(height: 20.h),
+
                 SizedBox(
                   height: 50.h,
                   child: ElevatedButton(
                     onPressed: () {
                       // Validate returns true if the form is valid, or false otherwise.
-                      if (_formKey.currentState!.validate()) {
-                        // If the form is valid, display a snackbar. In the real world,
-                        // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
-                        );
-                      }
+                      // if (_formKey.currentState!.validate()) {
+                      //   // If the form is valid, display a snackbar. In the real world,
+                      //   // you'd often call a server or save the information in a database.
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //     const SnackBar(content: Text('Processing Data')),
+                      //   );
+                      // }
+                      context.push("/account");
                     },
-                    child: const Text('Sign In'),
+                    child: const Text('Register'),
                   ),
-                ),
-
-                SizedBox(height: 30.h),
-                Row(
-                  crossAxisAlignment: .center,
-                  mainAxisAlignment: .center,
-                  children: [
-                    Text("Don't have an account?"),
-                    TextButton(
-                      onPressed: () => context.push("/registration"),
-                      child: Text("Create Account"),
-                    ),
-                  ],
                 ),
               ],
             ),
           ),
         ),
       ),
-      appBar: AppBar(title: Text("Sign In")),
+      appBar: AppBar(
+        title: Text("Register"),
+        leading: IconButton(
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            }
+          },
+          icon: Icon(
+            Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios_new,
+          ),
+        ),
+      ),
     );
   }
 }
