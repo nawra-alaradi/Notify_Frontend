@@ -20,6 +20,8 @@ class SettingsScreen extends StatelessWidget {
     return Skeleton(
       childWidget: Column(
         children: [
+          SizedBox(height: 60.h),
+
           ListTile(
             leading: Text("Account", style: textTheme.titleLarge),
             trailing: IconButton(
@@ -27,6 +29,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icon(Icons.account_circle_rounded),
             ),
           ),
+          SizedBox(height: 40.h),
           Consumer(
             builder: (context, ref, child) {
               ref.watch(themeProvider);
@@ -42,6 +45,8 @@ class SettingsScreen extends StatelessWidget {
               );
             },
           ),
+          SizedBox(height: 40.h),
+
           ListTile(
             title: Text("Sign Out", style: textTheme.titleLarge),
             trailing: IconButton(
@@ -50,21 +55,16 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20.h),
-          SizedBox(
-            width: 358.w,
-            height: 50.h,
-            child: ElevatedButton(onPressed: () {}, child: Text("Get Started")),
-          ),
         ],
       ),
       appBar: AppBar(
         title: Text("Settings"),
         // backgroundColor: theme.appBarTheme.backgroundColor,
       ),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: const FloatingActionButton(
+      //   onPressed: null,
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 }
